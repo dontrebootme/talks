@@ -1,0 +1,10 @@
+resources:
+
+  my_lb:
+    type: Rackspace::Cloud::LoadBalancer
+    properties:
+      nodes: []
+      protocol: TCP
+      port: 22
+      virtualIps:
+        - {"type": "PUBLIC", "ipVersion": "IPV4"}

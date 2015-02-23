@@ -1,0 +1,22 @@
+# This is a template that shows how to use Rackspace Auto Scale
+# with a Rackspace Cloud Load Balancer. It sets up a load balancer
+# to port 22 of the instances, and exposes webhooks for scaling
+# the group up and down as stack outputs. Just use:
+#     curl -XPOST <webhook_url>
+# to scale up or down, and then (after waiting a suitable amount
+# of time), ssh to the virtual IP and you'll get a random instance.
+
+heat_template_version: 2013-05-23
+
+description: Rackspace Auto Scale Test
+
+parameters:
+  key_name:
+    type: string
+    description: Name of an existing key pair to use for the instance
+  flavor:
+    type: string
+    description: flavor (actually an integer)
+  image:
+    type: string
+    description: UUID of image

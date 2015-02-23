@@ -1,0 +1,24 @@
+  add1hook:
+    type: Rackspace::AutoScale::WebHook
+    properties:
+      policy: {get_resource: add1}
+      name: add1hookzzz
+      metadata:
+        is_cool: "true"
+  dec1hook:
+    type: Rackspace::AutoScale::WebHook
+    properties:
+      policy: {get_resource: dec1}
+      name: dec1hookzzz
+      metadata:
+        is_cool: "false"
+outputs:
+  increment_url:
+    description: POST to this URL to add a server
+    value: {get_attr: [add1hook, capabilityUrl]}
+  decrement_url:
+    description: POST to this URL to remove a server
+    value: {get_attr: [dec1hook, capabilityUrl]}
+  public_ip:
+    description: Public IP of the load balancer
+    value: {get_attr: [my_lb, PublicIp]}

@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://localhost:3999/templating-your-infrastructure.slide#1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Templating Your Infrastructure</title>
+    <meta charset="utf-8">
+    <script src="./templating-your-infrastructure_files/slides.js"></script>
+  <meta name="viewport" content="width=1100,height=750"><meta name="apple-mobile-web-app-capable" content="yes"></head>
+
+  <body style="display: none" class="loaded">
+
+    <section class="slides layout-widescreen">
+      
+      <article class="current">
+        <h1>Templating Your Infrastructure</h1>
+        <h3>Introduction to Cloud Orchestration</h3>
+        <h3>22 February 2015</h3>
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Patrick O'Connor
+  </p>
+  
+
+  
+  <p>
+    Sr. Systems Engineer, The Walt Disney Company
+  </p>
+  
+
+          </div>
+        
+          <div class="presenter">
+            
+  
+  <p>
+    
+  </p>
+  
+
+          </div>
+        
+      </article>
+      
+  
+  
+      <article class="next">
+      
+        <h2>Who am I</h2>
+      
+      </article>
+  
+  
+  
+      <article class="far-next">
+      
+        <h3>I'm Patrick. Hi! Let's be friends.</h3>
+        
+<div class="image">
+  <img src="./templating-your-infrastructure_files/oculus.jpg">
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h2>Getting started</h2>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Buzzwords</h3>
+        
+<div class="image">
+  <img src="./templating-your-infrastructure_files/wordcloud.png">
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Big picture</h3>
+        
+<div class="image">
+  <img src="./templating-your-infrastructure_files/cloudformation_1.png">
+</div>
+<figcaption><i>CloudFormation</i> via <a href="http://localhost:3999/cloudformation-create-your-aws-stack-from-a-recipe" target="_self">https://aws.amazon.com/blogs/aws/cloudformation-create-your-aws-stack-from-a-recipe/</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h2>Logical grouping</h2>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Orchestration Services</h3>
+        
+  <ul>
+  
+    <li>AWS CloudFormation</li>
+  
+    <li>OpenStack Heat</li>
+  
+    <li>Terraform</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Libraries</h3>
+        
+  <ul>
+  
+    <li>Fog (Ruby)</li>
+  
+    <li>Boto (Python)</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Configuration Management</h3>
+        
+  <ul>
+  
+    <li>Ansible</li>
+  
+    <li>Chef</li>
+  
+    <li>Puppet</li>
+  
+    <li>Salt</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h2>Orchestration Services</h2>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Amazon Web Services CloudFormation Introduction</h3>
+        
+  
+  <p>
+    <b>Question:</b> What is AWS CloudFormation?
+  </p>
+  
+
+  <ul>
+  
+    <li>AWS CloudFormation is a service that gives developers and businesses an easy way to create a collection of related AWS resources and provision them in an orderly and predictable fashion.</li>
+  
+  </ul>
+
+  
+  <p>
+    <b>Two</b> main concepts:
+  </p>
+  
+
+  <ul>
+  
+    <li><i>template</i> a JSON-format, text-based file that describes all the AWS resources you need to deploy to run your application.</li>
+  
+    <li><i>stack</i> the set of AWS resources that are created and managed as a single unit when AWS CloudFormation instantiates a template.</li>
+  
+  </ul>
+
+  
+  <p>
+    Template source can be local file, or S3 URL.
+<br>
+
+    By default, the “automatic rollback on error” feature is enabled.
+  </p>
+  
+<figcaption><i>AWS CloudFormation FAQ</i> <a href="http://aws.amazon.com/cloudformation/faqs/" target="_blank">aws.amazon.com/cloudformation/faqs/</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Amazon Web Services CloudFormation Supported Services</h3>
+        
+  <ul>
+  
+    <li>Auto Scaling</li>
+  
+    <li>Amazon CloudFront</li>
+  
+    <li>AWS CloudTrail</li>
+  
+    <li>AWS CloudWatch</li>
+  
+    <li>Amazon DynamoDB</li>
+  
+    <li>Amazon EC2</li>
+  
+    <li>Amazon ElastiCache</li>
+  
+    <li>AWS Elastic Beanstalk</li>
+  
+    <li>AWS Elastic Load Balancing</li>
+  
+    <li>Amazon Kinesis</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Amazon Web Services CloudFormation Supported Services</h3>
+        
+  <ul>
+  
+    <li>AWS Identity and Access Management</li>
+  
+    <li>AWS OpsWorks</li>
+  
+    <li>Amazon RDS</li>
+  
+    <li>Amazon Redshift</li>
+  
+    <li>Amazon Route 53</li>
+  
+    <li>Amazon S3</li>
+  
+    <li>Amazon SimpleDB</li>
+  
+    <li>Amazon SNS</li>
+  
+    <li>Amazon SQS</li>
+  
+    <li>Amazon VPC</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Amazon Web Services CloudFormation Snippets</h3>
+        
+  
+  <p>
+    Elastic Load Balancer
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">"MyLoadBalancer" : {</span>
+<span num="2">    "Type" : "AWS::ElasticLoadBalancing::LoadBalancer",</span>
+<span num="3">    "Properties" : {</span>
+<span num="4">        "AvailabilityZones" : [ "us-east-1a" ],</span>
+<span num="5">        "Instances" : [</span>
+<span num="6">            { "Ref" : "logical name of AWS::EC2::Instance resource 1" },</span>
+<span num="7">            { "Ref" : "logical name of AWS::EC2::Instance resource 2" }</span>
+<span num="8">        ],</span>
+<span num="9">        "Listeners" : [ {</span>
+<span num="10">            "LoadBalancerPort" : "80",</span>
+<span num="11">            "InstancePort" : "80",</span>
+<span num="12">            "Protocol" : "HTTP"</span>
+<span num="13">        } ],</span>
+<span num="14">        "HealthCheck" : {</span>
+<span num="15">            "Target" : "HTTP:80/",</span>
+<span num="16">            "HealthyThreshold" : "3",</span>
+<span num="17">            "UnhealthyThreshold" : "5",</span>
+<span num="18">            "Interval" : "30",</span>
+<span num="19">            "Timeout" : "5"</span>
+<span num="20">        }</span>
+<span num="21">    }</span>
+<span num="22">}</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Amazon Web Services CloudFormation Snippets</h3>
+        
+  
+  <p>
+    IAM User Creation
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">"myuser" : {</span>
+<span num="2">   "Type" : "AWS::IAM::User",</span>
+<span num="3">   "Properties" : {</span>
+<span num="4">      "Path" : "/",</span>
+<span num="5">      "LoginProfile" : {</span>
+<span num="6">         "Password" : "myP@ssW0rd"</span>
+<span num="7">      }</span>
+<span num="8">   }</span>
+<span num="9">}</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Amazon Web Services CloudFormation Snippets</h3>
+        
+  
+  <p>
+    Route 53 DNS
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">"myDNSOne" : {</span>
+<span num="2">    "Type" : "AWS::Route53::RecordSetGroup",</span>
+<span num="3">    "Properties" : {</span>
+<span num="4">        "HostedZoneName" : "example.com.",</span>
+<span num="5">        "Comment" : "Weighted RR for my frontends.",</span>
+<span num="6">        "RecordSets" : [</span>
+<span num="7">        {</span>
+<span num="8">            "Name" : "mysite.example.com.",</span>
+<span num="9">            "Type" : "CNAME",</span>
+<span num="10">            "TTL" : "900",</span>
+<span num="11">            "SetIdentifier" : "Frontend One",</span>
+<span num="12">            "Weight" : "4",</span>
+<span num="13">            "ResourceRecords" : ["example-ec2.amazonaws.com"]</span>
+<span num="14">          },</span>
+<span num="15">          {</span>
+<span num="16">            "Name" : "mysite.example.com.",</span>
+<span num="17">            "Type" : "CNAME",</span>
+<span num="18">            "TTL" : "900",</span>
+<span num="19">            "SetIdentifier" : "Frontend Two",</span>
+<span num="20">            "Weight" : "6",</span>
+<span num="21">            "ResourceRecords" : ["example-ec2-larger.amazonaws.com"]</span>
+<span num="22">          }</span>
+<span num="23">      ]</span>
+<span num="24">    }</span>
+<span num="25">}</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>OpenStack Heat Introduction</h3>
+        
+  
+  <p>
+    <b>Question:</b> What is OpenStack Heat?
+  </p>
+  
+
+  <ul>
+  
+    <li>Part of the OpenStack Orchestration Program.</li>
+  
+    <li>Implements an orchestration engine to launch multiple composite cloud applications based on templates in the form of text files that can be treated like code.</li>
+  
+  </ul>
+
+  
+  <p>
+    <b>Two</b> main concepts (like AWS CFN):
+  </p>
+  
+
+  <ul>
+  
+    <li><i>template</i> json(CFN)/yaml(HOT) template file that describes all the OpenStack resources you need to deploy to run your application.</li>
+  
+    <li><i>stack</i> grouping of connected cloud resources (VM, volumes, networks, etc.)</li>
+  
+  </ul>
+
+  
+  <p>
+    CloudFormation template support
+<br>
+
+    Native template in progress (Heat Orchestration Template)
+  </p>
+  
+<figcaption><i>Heat</i> at <a href="https://wiki.openstack.org/wiki/Heat" target="_blank">wiki.openstack.org/wiki/Heat</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>OpenStack Heat Orchestration Supported Services</h3>
+        
+  <ul>
+  
+    <li>OpenStack Nova (Compute)</li>
+  
+    <li>OpenStack Neutron (Network)</li>
+  
+    <li>OpenStack Cinder (Volume)</li>
+  
+    <li>OpenStack Swift (Object Storage)</li>
+  
+    <li>OpenStack Cielometer (Metrics/Information)</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>OpenStack Heat Orchestration Template (HOT) Snippets</h3>
+        
+  
+  <p>
+    Simple Single Instance w/ parameters and output to user
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">heat_template_version: 2013-05-23</span>
+<span num="2">description: Simple template to deploy a single compute instance</span>
+<span num="3">parameters:</span>
+<span num="4">  key_name:</span>
+<span num="5">    type: string</span>
+<span num="6">    label: Key Name</span>
+<span num="7">    description: Name of key-pair to be used for compute instance</span>
+<span num="8">  instance_type:</span>
+<span num="9">    type: string</span>
+<span num="10">    label: Instance Type</span>
+<span num="11">    description: Type of instance (flavor) to be used</span>
+<span num="12">resources:</span>
+<span num="13">  my_instance:</span>
+<span num="14">    type: OS::Nova::Server</span>
+<span num="15">    properties:</span>
+<span num="16">      key_name: { get_param: key_name }</span>
+<span num="17">      image: F18-x86_64-cfntools</span>
+<span num="18">      flavor: { get_param: instance_type }</span>
+<span num="19">outputs:</span>
+<span num="20">  instance_ip:</span>
+<span num="21">    description: The IP address of the deployed instance</span>
+<span num="22">    value: { get_attr: [my_instance, first_address] }</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>OpenStack Heat Orchestration Template (HOT) Snippets</h3>
+        
+  
+  <p>
+    Rackspace Example AutoScale w/ Load Balancer
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1"># This is a template that shows how to use Rackspace Auto Scale</span>
+<span num="2"># with a Rackspace Cloud Load Balancer. It sets up a load balancer</span>
+<span num="3"># to port 22 of the instances, and exposes webhooks for scaling</span>
+<span num="4"># the group up and down as stack outputs. Just use:</span>
+<span num="5">#     curl -XPOST &lt;webhook_url&gt;</span>
+<span num="6"># to scale up or down, and then (after waiting a suitable amount</span>
+<span num="7"># of time), ssh to the virtual IP and you'll get a random instance.</span>
+<span num="8"></span>
+<span num="9">heat_template_version: 2013-05-23</span>
+<span num="10"></span>
+<span num="11">description: Rackspace Auto Scale Test</span>
+<span num="12"></span>
+<span num="13">parameters:</span>
+<span num="14">  key_name:</span>
+<span num="15">    type: string</span>
+<span num="16">    description: Name of an existing key pair to use for the instance</span>
+<span num="17">  flavor:</span>
+<span num="18">    type: string</span>
+<span num="19">    description: flavor (actually an integer)</span>
+<span num="20">  image:</span>
+<span num="21">    type: string</span>
+<span num="22">    description: UUID of image</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>OpenStack Heat Orchestration Template (HOT) Snippets</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">resources:</span>
+<span num="2"></span>
+<span num="3">  my_lb:</span>
+<span num="4">    type: Rackspace::Cloud::LoadBalancer</span>
+<span num="5">    properties:</span>
+<span num="6">      nodes: []</span>
+<span num="7">      protocol: TCP</span>
+<span num="8">      port: 22</span>
+<span num="9">      virtualIps:</span>
+<span num="10">        - {"type": "PUBLIC", "ipVersion": "IPV4"}</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>OpenStack Heat Orchestration Template (HOT) Snippets</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">  my_group:</span>
+<span num="2">    type: Rackspace::AutoScale::Group</span>
+<span num="3">    properties:</span>
+<span num="4">      groupConfiguration:</span>
+<span num="5">        name: heat-test-group</span>
+<span num="6">        cooldown: 60</span>
+<span num="7">        minEntities: 0</span>
+<span num="8">        maxEntities: 3</span>
+<span num="9">        metadata:</span>
+<span num="10">          cool_factor: "50"</span>
+<span num="11">      launchConfiguration:</span>
+<span num="12">        type: launch_server</span>
+<span num="13">        args:</span>
+<span num="14">          server:</span>
+<span num="15">            name: heat-scaled-server</span>
+<span num="16">            flavorRef: {get_param: flavor}</span>
+<span num="17">            imageRef: {get_param: image}</span>
+<span num="18">            key_name: {get_param: key_name}</span>
+<span num="19">            metadata:</span>
+<span num="20">              hotness_factor: "100"</span>
+<span num="21">          loadBalancers:</span>
+<span num="22">            -</span>
+<span num="23">              loadBalancerId: {get_resource: my_lb}</span>
+<span num="24">              port: 22</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>OpenStack Heat Orchestration Template (HOT) Snippets</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">  add1:</span>
+<span num="2">    type: Rackspace::AutoScale::ScalingPolicy</span>
+<span num="3">    properties:</span>
+<span num="4">      group: {get_resource: my_group}</span>
+<span num="5">      name: add1</span>
+<span num="6">      change: 1</span>
+<span num="7">      cooldown: 59</span>
+<span num="8">      type: webhook</span>
+<span num="9"></span>
+<span num="10">  dec1:</span>
+<span num="11">    type: Rackspace::AutoScale::ScalingPolicy</span>
+<span num="12">    properties:</span>
+<span num="13">      group: {get_resource: my_group}</span>
+<span num="14">      name: dec1</span>
+<span num="15">      change: -1</span>
+<span num="16">      cooldown: 59</span>
+<span num="17">      type: webhook</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>OpenStack Heat Orchestration Template (HOT) Snippets</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">  add1hook:</span>
+<span num="2">    type: Rackspace::AutoScale::WebHook</span>
+<span num="3">    properties:</span>
+<span num="4">      policy: {get_resource: add1}</span>
+<span num="5">      name: add1hookzzz</span>
+<span num="6">      metadata:</span>
+<span num="7">        is_cool: "true"</span>
+<span num="8">  dec1hook:</span>
+<span num="9">    type: Rackspace::AutoScale::WebHook</span>
+<span num="10">    properties:</span>
+<span num="11">      policy: {get_resource: dec1}</span>
+<span num="12">      name: dec1hookzzz</span>
+<span num="13">      metadata:</span>
+<span num="14">        is_cool: "false"</span>
+<span num="15">outputs:</span>
+<span num="16">  increment_url:</span>
+<span num="17">    description: POST to this URL to add a server</span>
+<span num="18">    value: {get_attr: [add1hook, capabilityUrl]}</span>
+<span num="19">  decrement_url:</span>
+<span num="20">    description: POST to this URL to remove a server</span>
+<span num="21">    value: {get_attr: [dec1hook, capabilityUrl]}</span>
+<span num="22">  public_ip:</span>
+<span num="23">    description: Public IP of the load balancer</span>
+<span num="24">    value: {get_attr: [my_lb, PublicIp]}</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Terraform</h3>
+        
+  
+  <p>
+    <b>Question:</b> What is Terraform?
+<br>
+
+    - Terraform is a flexible abstraction of resources and providers.
+  </p>
+  
+<figcaption><i>Terraform</i> via <a href="https://www.terraform.io/intro/vs/index.html" target="_blank">www.terraform.io/intro/vs/index.html</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Terraform</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1"># Specify the provider and access details</span>
+<span num="2">provider "aws" {</span>
+<span num="3">    region = "${var.aws_region}"</span>
+<span num="4">}</span>
+<span num="5">resource "aws_elb" "web" {</span>
+<span num="6">  name = "terraform-example-elb"</span>
+<span num="7"></span>
+<span num="8">  # The same availability zone as our instance</span>
+<span num="9">  availability_zones = ["${aws_instance.web.availability_zone}"]</span>
+<span num="10"></span>
+<span num="11">  listener {</span>
+<span num="12">    instance_port = 80</span>
+<span num="13">    instance_protocol = "http"</span>
+<span num="14">    lb_port = 80</span>
+<span num="15">    lb_protocol = "http"</span>
+<span num="16">  }</span>
+<span num="17"></span>
+<span num="18">  # The instance is registered automatically</span>
+<span num="19">  instances = ["${aws_instance.web.id}"]</span>
+<span num="20">}</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Terraform</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">resource "aws_instance" "web" {</span>
+<span num="2">  # The connection block tells our provisioner how to</span>
+<span num="3">  # communicate with the resource (instance)</span>
+<span num="4">  connection {</span>
+<span num="5">    # The default username for our AMI</span>
+<span num="6">    user = "ubuntu"</span>
+<span num="7"></span>
+<span num="8">    # The path to your keyfile</span>
+<span num="9">    key_file = "${var.key_path}"</span>
+<span num="10">  }</span>
+<span num="11"></span>
+<span num="12">  instance_type = "m1.small"</span>
+<span num="13"></span>
+<span num="14">  # Lookup the correct AMI based on the region</span>
+<span num="15">  # we specified</span>
+<span num="16">  ami = "${lookup(var.aws_amis, var.aws_region)}"</span>
+<span num="17"></span>
+<span num="18">  # The name of our SSH keypair you've created and downloaded</span>
+<span num="19">  # from the AWS console.</span>
+<span num="20">  #</span>
+<span num="21">  # https://console.aws.amazon.com/ec2/v2/home?region=us-west-2#KeyPairs:</span>
+<span num="22">  #</span>
+<span num="23">  key_name = "${var.key_name}"</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Terraform</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">  # Our Security group to allow HTTP and SSH access</span>
+<span num="2">  security_groups = ["${aws_security_group.default.name}"]</span>
+<span num="3"></span>
+<span num="4">  # We run a remote provisioner on the instance after creating it.</span>
+<span num="5">  # In this case, we just install nginx and start it. By default,</span>
+<span num="6">  # this should be on port 80</span>
+<span num="7">  provisioner "remote-exec" {</span>
+<span num="8">    inline = [</span>
+<span num="9">        "sudo apt-get -y update",</span>
+<span num="10">        "sudo apt-get -y install nginx",</span>
+<span num="11">        "sudo service nginx start"</span>
+<span num="12">    ]</span>
+<span num="13">  }</span>
+<span num="14">}</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h2>Libraries</h2>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Fog</h3>
+        
+  
+  <p>
+    <b>Ruby</b> Cloud Services library
+<br>
+
+    Focuses on cross service compatibility
+<br>
+
+    Compare:
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1"># create a connection</span>
+<span num="2">connection = Fog::Compute.new({</span>
+<span num="3">  :provider           =&gt; 'Rackspace',</span>
+<span num="4">  :rackspace_username =&gt; RACKSPACE_USERNAME,</span>
+<span num="5">  :rackspace_api_key  =&gt; RACKSPACE_API_KEY</span>
+<span num="6">})</span>
+<span num="7">:rackspace_auth_url =&gt; "lon.auth.api.rackspacecloud.com"</span>
+<span num="8">server = connection.servers.bootstrap</span>
+</pre>
+
+
+</div>
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1"># create a connection</span>
+<span num="2">connection = Fog::Compute.new({</span>
+<span num="3">  :provider =&gt; 'google',</span>
+<span num="4">  :google_project =&gt; GOOGLE_PROJECT_ID,</span>
+<span num="5">  :google_client_email =&gt; GOOGLE_SERVICE_EMAIL,</span>
+<span num="6">  :google_key_location =&gt; GOOGLE_KEY_LOCATION,</span>
+<span num="7">})</span>
+<span num="8">server = connection.servers.bootstrap</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Fog Providers Supported</h3>
+        
+  <ul>
+  
+    <li>AWS</li>
+  
+    <li>Dreamhost</li>
+  
+    <li>Google</li>
+  
+    <li>HP</li>
+  
+    <li>Linode</li>
+  
+    <li>OpenStack</li>
+  
+    <li>OpenVZ</li>
+  
+    <li>Ovirt</li>
+  
+    <li>Rackspace</li>
+  
+    <li>Vsphere</li>
+  
+    <li>XenServer</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Fog</h3>
+        
+  
+  <p>
+    <b>Ruby</b> Cloud Services library
+<br>
+
+    Usage:
+  </p>
+  
+
+  
+  <div class="code"><pre>gem install fog</pre></div>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">require rubygems</span>
+<span num="2">require fog</span>
+<span num="3"></span>
+<span num="4"># create a compute connection</span>
+<span num="5">compute = Fog::Compute.new({:provider =&gt; 'AWS', :aws_access_key_id =&gt; ACCESS_KEY_ID, :aws_secret_access_key =&gt; SECRET_ACCESS_KEY})</span>
+<span num="6"># compute operations go here</span>
+<span num="7"></span>
+<span num="8"># create a storage connection</span>
+<span num="9">storage = Fog::Storage.new({:provider =&gt; 'AWS', :aws_access_key_id =&gt; ACCESS_KEY_ID, :aws_secret_access_key =&gt; SECRET_ACCESS_KEY})</span>
+<span num="10"># storage operations go here</span>
+</pre>
+
+
+</div>
+<figcaption><i>fog</i> via <a href="http://fog.io/" target="_blank">fog.io/</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Fog Mock Mode</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">require 'rubygems'</span>
+<span num="2">require 'fog'</span>
+<span num="3"># Turn on mocking</span>
+<span num="4">Fog.mock!</span>
+<span num="5"></span>
+<span num="6"># Create a mock connection to S3</span>
+<span num="7">storage = Fog::Storage.new({</span>
+<span num="8">  :aws_access_key_id =&gt; "asdf",</span>
+<span num="9">  :aws_secret_access_key =&gt; "asdf",</span>
+<span num="10">  :provider =&gt; "AWS"</span>
+<span num="11">})</span>
+<span num="12"></span>
+<span num="13"># Turn off mocking</span>
+<span num="14">Fog.unmock!</span>
+<span num="15"></span>
+<span num="16"># Create a real connection to S3</span>
+<span num="17">storage = Fog::Storage.new({</span>
+<span num="18">  :aws_access_key_id =&gt; "asdf",</span>
+<span num="19">  :aws_secret_access_key =&gt; "asdf",</span>
+<span num="20">  :provider =&gt; "AWS"</span>
+<span num="21">})</span>
+</pre>
+
+
+</div>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Boto</h3>
+        
+  
+  <p>
+    <b>Python</b> interface to Amazon Web Services
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">&gt;&gt;&gt; import boto</span>
+<span num="2">&gt;&gt;&gt; import time</span>
+<span num="3">&gt;&gt;&gt; s3 = boto.connect_s3()</span>
+<span num="4"># Create a new bucket. Buckets must have a globally unique name (not just</span>
+<span num="5"># unique to your account).</span>
+<span num="6">&gt;&gt;&gt; bucket = s3.create_bucket('boto-demo-%s' % int(time.time()))</span>
+<span num="7"></span>
+<span num="8"># Create a new key/value pair.</span>
+<span num="9">&gt;&gt;&gt; key = bucket.new_key('mykey')</span>
+<span num="10">&gt;&gt;&gt; key.set_contents_from_string("Hello World!")</span>
+<span num="11"></span>
+<span num="12"># Sleep to ensure the data is eventually there.</span>
+<span num="13">&gt;&gt;&gt; time.sleep(2)</span>
+<span num="14"></span>
+<span num="15"># Retrieve the contents of ``mykey``.</span>
+<span num="16">&gt;&gt;&gt; print key.get_contents_as_string()</span>
+<span num="17">'Hello World!'</span>
+<span num="18"></span>
+<span num="19"># Delete the key.</span>
+<span num="20">&gt;&gt;&gt; key.delete()</span>
+<span num="21"># Delete the bucket.</span>
+<span num="22">&gt;&gt;&gt; bucket.delete()</span>
+</pre>
+
+
+</div>
+<figcaption><i>boto</i> via <a href="http://docs.pythonboto.org/" target="_blank">docs.pythonboto.org/</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h2>Configuration Management</h2>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Configuration Management</h3>
+        
+  <ul>
+  
+    <li>Does your tool support your needs?</li>
+  
+    <li>Each tool may have differeing support for services/platforms.</li>
+  
+    <li>Lets look at a few examples on AWS.</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Chef AWS Cookbook</h3>
+        
+  
+  <p>
+    Supports:
+  </p>
+  
+
+  <ul>
+  
+    <li>EBS Volumes (ebs_volume)</li>
+  
+    <li>EBS Raid (ebs_raid)</li>
+  
+    <li>Elastic IPs (elastic_ip)</li>
+  
+    <li>Elastic Load Balancer (elastic_lb)</li>
+  
+    <li>AWS Resource Tags (resource_tag)</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Chef AWS Cookbook Snippets</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">aws_ebs_volume "db_ebs_volume" do</span>
+<span num="2">  aws_access_key aws['aws_access_key_id']</span>
+<span num="3">  aws_secret_access_key aws['aws_secret_access_key']</span>
+<span num="4">  size 50</span>
+<span num="5">  device "/dev/sdi"</span>
+<span num="6">  action [ :create, :attach ]</span>
+<span num="7">end</span>
+</pre>
+
+
+</div>
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">ip_info = data_bag_item("aws", "eip_load_balancer_production")</span>
+<span num="2">aws_elastic_ip "eip_load_balancer_production" do</span>
+<span num="3">  aws_access_key aws['aws_access_key_id']</span>
+<span num="4">  aws_secret_access_key aws['aws_secret_access_key']</span>
+<span num="5">  ip ip_info['public_ip']</span>
+<span num="6">  action :associate</span>
+<span num="7">end</span>
+</pre>
+
+
+</div>
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">aws_elastic_lb "elb_qa" do</span>
+<span num="2">  aws_access_key aws['aws_access_key_id']</span>
+<span num="3">  aws_secret_access_key aws['aws_secret_access_key']</span>
+<span num="4">  name "QA"</span>
+<span num="5">  action :register</span>
+<span num="6">end</span>
+</pre>
+
+
+</div>
+<figcaption><i>Chef AWS Cookbook</i> via <a href="https://github.com/opscode-cookbooks/aws" target="_blank">github.com/opscode-cookbooks/aws</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Chef Provisioning</h3>
+        
+  
+  <p>
+    Enter the machine resource
+  </p>
+  
+
+  
+  <div class="code"><pre>export CHEF_DRIVER=aws</pre></div>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1"># Database!</span>
+<span num="2">machine 'mario' do</span>
+<span num="3">  recipe 'postgresql'</span>
+<span num="4">  recipe 'mydb'</span>
+<span num="5">  tag 'mydb_master'</span>
+<span num="6">end</span>
+<span num="7"></span>
+<span num="8">num_webservers = 1</span>
+<span num="9"></span>
+<span num="10"># Web servers!</span>
+<span num="11">1.upto(num_webservers) do |i|</span>
+<span num="12">  machine "luigi#{i}" do</span>
+<span num="13">    recipe 'apache'</span>
+<span num="14">    recipe 'mywebapp'</span>
+<span num="15">  end</span>
+<span num="16">end</span>
+</pre>
+
+
+</div>
+<figcaption><i>Chef Provisioning</i> via <a href="https://github.com/chef/chef-provisioning" target="_blank">github.com/chef/chef-provisioning</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Ansible AWS Modules</h3>
+        
+  
+  <p>
+    Supports:
+  </p>
+  
+
+  <ul>
+  
+    <li>EC2 - Elastic compute cloud</li>
+  
+    <li>ELB -  Elastic Load Balancer</li>
+  
+    <li>S3 - Simple storage service</li>
+  
+    <li>VPC - Virtual Private Cloud</li>
+  
+    <li>ElastiCache - In-memory caching</li>
+  
+    <li>Route 53 - DNS</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Ansible AWS Modules Snippets</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1"># Example with tagging and CloudWatch</span>
+<span num="2">- ec2:</span>
+<span num="3">    key_name: mykey</span>
+<span num="4">    group: databases</span>
+<span num="5">    instance_type: t2.micro</span>
+<span num="6">    image: ami-123456</span>
+<span num="7">    wait: yes</span>
+<span num="8">    wait_timeout: 500</span>
+<span num="9">    count: 5</span>
+<span num="10">    instance_tags:</span>
+<span num="11">       db: postgres</span>
+<span num="12">    monitoring: yes</span>
+<span num="13">    vpc_subnet_id: subnet-29e63245</span>
+<span num="14">    assign_public_ip: yes</span>
+</pre>
+
+
+</div>
+<figcaption><i>Ansible for AWS</i> via <a href="http://www.ansible.com/aws" target="_blank">www.ansible.com/aws</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Ansible AWS Modules Snippets</h3>
+        
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1"># basic pre_task and post_task example</span>
+<span num="2">pre_tasks:</span>
+<span num="3">  - name: Gathering ec2 facts</span>
+<span num="4">    action: ec2_facts</span>
+<span num="5">  - name: Instance De-register</span>
+<span num="6">    local_action:</span>
+<span num="7">      module: ec2_elb</span>
+<span num="8">      instance_id: "{{ ansible_ec2_instance_id }}"</span>
+<span num="9">      state: 'absent'</span>
+<span num="10">roles:</span>
+<span num="11">  - myrole</span>
+<span num="12">post_tasks:</span>
+<span num="13">  - name: Instance Register</span>
+<span num="14">    local_action:</span>
+<span num="15">      module: ec2_elb</span>
+<span num="16">      instance_id: "{{ ansible_ec2_instance_id }}"</span>
+<span num="17">      ec2_elbs: "{{ item }}"</span>
+<span num="18">      state: 'present'</span>
+<span num="19">    with_items: ec2_elbs</span>
+</pre>
+
+
+</div>
+<figcaption><i>Ansible for AWS</i> via <a href="http://www.ansible.com/aws" target="_blank">www.ansible.com/aws</a></figcaption>
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h3>Conclusion</h3>
+        
+  <ul>
+  
+    <li>What are your needs?</li>
+  
+    <li>What is your platform?</li>
+  
+    <li>What is your teams skillset/language?</li>
+  
+    <li>Many current efforts, this space is growing.</li>
+  
+  </ul>
+
+      
+      </article>
+  
+  
+  
+      <article>
+      
+        <h2>Questions?</h2>
+      
+      </article>
+  
+  
+
+      <article>
+        <h3>Thank you</h3>
+        
+          <div class="presenter">
+            
+  
+  <p>
+    Patrick O'Connor
+  </p>
+  
+
+  
+  <p>
+    Sr. Systems Engineer, The Walt Disney Company
+  </p>
+  
+<p class="link"><a href="mailto:patrick@dontreboot.me" target="_blank">patrick@dontreboot.me</a></p><p class="link"><a href="http://dontreboot.me/scale13x" target="_blank">http://dontreboot.me/scale13x</a></p><p class="link"><a href="http://twitter.com/dontrebootme" target="_blank">@dontrebootme</a></p>
+          </div>
+        
+          <div class="presenter">
+            
+  
+  <p>
+    
+  </p>
+  
+
+          </div>
+        
+      </article>
+
+    <div class="slide-area" id="prev-slide-area"></div><div class="slide-area" id="next-slide-area"></div></section>
+
+    <div id="help">
+      Use the left and right arrow keys or click the left and right
+      edges of the page to navigate between slides.<br>
+      (Press 'H' or navigate to hide this message.)
+    </div>
+
+  
+  
+  <script src="./templating-your-infrastructure_files/play.js"></script>
+  
+
+<link rel="stylesheet" type="text/css" href="./templating-your-infrastructure_files/css"><link rel="stylesheet" type="text/css" href="./templating-your-infrastructure_files/styles.css"><link rel="stylesheet" type="text/css" media="print" href="./templating-your-infrastructure_files/print.css"></body></html>

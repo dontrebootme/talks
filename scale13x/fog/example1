@@ -1,0 +1,10 @@
+require rubygems
+require fog
+
+# create a compute connection
+compute = Fog::Compute.new({:provider => 'AWS', :aws_access_key_id => ACCESS_KEY_ID, :aws_secret_access_key => SECRET_ACCESS_KEY})
+# compute operations go here
+
+# create a storage connection
+storage = Fog::Storage.new({:provider => 'AWS', :aws_access_key_id => ACCESS_KEY_ID, :aws_secret_access_key => SECRET_ACCESS_KEY})
+# storage operations go here

@@ -1,0 +1,17 @@
+  add1:
+    type: Rackspace::AutoScale::ScalingPolicy
+    properties:
+      group: {get_resource: my_group}
+      name: add1
+      change: 1
+      cooldown: 59
+      type: webhook
+
+  dec1:
+    type: Rackspace::AutoScale::ScalingPolicy
+    properties:
+      group: {get_resource: my_group}
+      name: dec1
+      change: -1
+      cooldown: 59
+      type: webhook

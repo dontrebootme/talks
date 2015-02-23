@@ -1,0 +1,270 @@
+Templating Your Infrastructure
+Introduction to Cloud Orchestration
+22 Feb 2015
+Tags: cloud, openstack, aws, infrastructure
+
+Patrick O'Connor
+Sr. Systems Engineer, The Walt Disney Company
+patrick@dontreboot.me
+http://dontreboot.me/scale13x
+@dontrebootme
+
+
+
+* Who am I
+* I'm Patrick. Hi! Let's be friends.
+.image oculus.jpg
+
+* Getting started
+* Buzzwords
+.image wordcloud.png
+* Big picture
+.image aws/cloudformation_1.png
+
+.caption _CloudFormation_ via [[cloudformation-create-your-aws-stack-from-a-recipe][https://aws.amazon.com/blogs/aws/cloudformation-create-your-aws-stack-from-a-recipe/]]
+* Logical grouping
+* Orchestration Services
+- AWS CloudFormation
+- OpenStack Heat
+- Terraform
+
+* Libraries
+- Fog (Ruby)
+- Boto (Python)
+
+* Configuration Management
+- Ansible
+- Chef
+- Puppet
+- Salt
+
+* Orchestration Services
+### AWS Cloudformation
+
+* Amazon Web Services CloudFormation Introduction
+*Question:* What is AWS CloudFormation?
+
+- AWS CloudFormation is a service that gives developers and businesses an easy way to create a collection of related AWS resources and provision them in an orderly and predictable fashion.
+*Two* main concepts:
+
+- _template_ a JSON-format, text-based file that describes all the AWS resources you need to deploy to run your application.
+- _stack_ the set of AWS resources that are created and managed as a single unit when AWS CloudFormation instantiates a template.
+Template source can be local file, or S3 URL.
+By default, the “automatic rollback on error” feature is enabled.
+
+.caption _AWS_CloudFormation_FAQ_ [[http://aws.amazon.com/cloudformation/faqs/]]
+
+* Amazon Web Services CloudFormation Supported Services
+- Auto Scaling
+- Amazon CloudFront
+- AWS CloudTrail
+- AWS CloudWatch
+- Amazon DynamoDB
+- Amazon EC2
+- Amazon ElastiCache
+- AWS Elastic Beanstalk
+- AWS Elastic Load Balancing
+- Amazon Kinesis
+
+* Amazon Web Services CloudFormation Supported Services
+- AWS Identity and Access Management
+- AWS OpsWorks
+- Amazon RDS
+- Amazon Redshift
+- Amazon Route 53
+- Amazon S3
+- Amazon SimpleDB
+- Amazon SNS
+- Amazon SQS
+- Amazon VPC
+
+* Amazon Web Services CloudFormation Snippets
+Elastic Load Balancer
+
+.code aws/cfn-elb-snip.json
+
+* Amazon Web Services CloudFormation Snippets
+IAM User Creation
+
+.code aws/cfn-iam-user.json
+
+* Amazon Web Services CloudFormation Snippets
+Route 53 DNS
+
+.code aws/cfn-route53.json
+
+### OpenStack Heat
+
+* OpenStack Heat Introduction
+*Question:* What is OpenStack Heat?
+
+- Part of the OpenStack Orchestration Program.
+- Implements an orchestration engine to launch multiple composite cloud applications based on templates in the form of text files that can be treated like code.
+
+*Two* main concepts (like AWS CFN):
+
+- _template_ json(CFN)/yaml(HOT) template file that describes all the OpenStack resources you need to deploy to run your application.
+- _stack_ grouping of connected cloud resources (VM, volumes, networks, etc.)
+
+CloudFormation template support
+Native template in progress (Heat Orchestration Template)
+
+.caption _Heat_ at [[https://wiki.openstack.org/wiki/Heat]]
+
+* OpenStack Heat Orchestration Supported Services
+- OpenStack Nova (Compute)
+- OpenStack Neutron (Network)
+- OpenStack Cinder (Volume)
+- OpenStack Swift (Object Storage)
+- OpenStack Cielometer (Metrics/Information)
+
+* OpenStack Heat Orchestration Template (HOT) Snippets
+Simple Single Instance w/ parameters and output to user
+
+.code heat/simple.yaml
+
+* OpenStack Heat Orchestration Template (HOT) Snippets
+Rackspace Example AutoScale w/ Load Balancer
+
+.code heat/rackspace-autoscale-intro.yaml
+
+* OpenStack Heat Orchestration Template (HOT) Snippets
+
+.code heat/rackspace-autoscale.yaml
+
+* OpenStack Heat Orchestration Template (HOT) Snippets
+
+.code heat/rackspace-autoscale2.yaml
+
+* OpenStack Heat Orchestration Template (HOT) Snippets
+
+.code heat/rackspace-autoscale3.yaml
+
+* OpenStack Heat Orchestration Template (HOT) Snippets
+
+.code heat/rackspace-autoscale4.yaml
+
+* Terraform
+*Question:* What is Terraform?
+- Terraform is a flexible abstraction of resources and providers.
+
+.caption _Terraform_ via [[https://www.terraform.io/intro/vs/index.html]]
+
+
+* Terraform
+
+.code terraform/aws-two-tier-main.tf
+
+* Terraform
+
+.code terraform/aws-two-tier-main1.tf
+
+* Terraform
+
+.code terraform/aws-two-tier-main2.tf
+
+* Libraries
+* Fog
+*Ruby* Cloud Services library
+Focuses on cross service compatibility
+Compare:
+
+.code fog/rackspace.rb
+.code fog/google.rb
+
+* Fog Providers Supported
+- AWS
+- Dreamhost
+- Google
+- HP
+- Linode
+- OpenStack
+- OpenVZ
+- Ovirt
+- Rackspace
+- Vsphere
+- XenServer
+
+* Fog
+*Ruby* Cloud Services library
+Usage:
+
+  gem install fog
+.code fog/example1
+
+
+.caption _fog_ via [[http://fog.io/]]
+
+
+* Fog Mock Mode
+
+.code fog/mock.rb
+
+* Boto
+*Python* interface to Amazon Web Services
+
+.code boto/example
+
+.caption _boto_ via [[http://docs.pythonboto.org/]]
+
+* Configuration Management
+
+* Configuration Management
+
+- Does your tool support your needs?
+- Each tool may have differeing support for services/platforms.
+- Lets look at a few examples on AWS.
+
+### Chef
+
+* Chef AWS Cookbook
+Supports:
+
+- EBS Volumes (ebs_volume)
+- EBS Raid (ebs_raid)
+- Elastic IPs (elastic_ip)
+- Elastic Load Balancer (elastic_lb)
+- AWS Resource Tags (resource_tag)
+
+* Chef AWS Cookbook Snippets
+
+.code chef/aws_ebs.rb
+.code chef/aws_elasticip.rb
+.code chef/aws_elasticlb.rb
+.caption _Chef_AWS_Cookbook_ via [[https://github.com/opscode-cookbooks/aws]]
+
+* Chef Provisioning
+Enter the machine resource
+
+ export CHEF_DRIVER=aws
+.code chef/provisioning-sample.rb
+.caption _Chef_Provisioning_ via [[https://github.com/chef/chef-provisioning]]
+
+* Ansible AWS Modules
+Supports:
+
+- EC2 - Elastic compute cloud
+- ELB -  Elastic Load Balancer
+- S3 - Simple storage service
+- VPC - Virtual Private Cloud
+- ElastiCache - In-memory caching
+- Route 53 - DNS
+
+* Ansible AWS Modules Snippets
+
+.code ansible/ec2.yaml
+.caption _Ansible_for_AWS_ via [[http://www.ansible.com/aws]]
+
+* Ansible AWS Modules Snippets
+
+.code ansible/elb.yaml
+.caption _Ansible_for_AWS_ via [[http://www.ansible.com/aws]]
+
+
+* Conclusion
+- What are your needs?
+- What is your platform?
+- What is your teams skillset/language?
+- Many current efforts, this space is growing.
+
+* Questions?

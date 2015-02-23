@@ -1,0 +1,9 @@
+"myuser" : {
+   "Type" : "AWS::IAM::User",
+   "Properties" : {
+      "Path" : "/",
+      "LoginProfile" : {
+         "Password" : "myP@ssW0rd"
+      }
+   }
+}

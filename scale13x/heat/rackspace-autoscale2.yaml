@@ -1,0 +1,24 @@
+  my_group:
+    type: Rackspace::AutoScale::Group
+    properties:
+      groupConfiguration:
+        name: heat-test-group
+        cooldown: 60
+        minEntities: 0
+        maxEntities: 3
+        metadata:
+          cool_factor: "50"
+      launchConfiguration:
+        type: launch_server
+        args:
+          server:
+            name: heat-scaled-server
+            flavorRef: {get_param: flavor}
+            imageRef: {get_param: image}
+            key_name: {get_param: key_name}
+            metadata:
+              hotness_factor: "100"
+          loadBalancers:
+            -
+              loadBalancerId: {get_resource: my_lb}
+              port: 22
